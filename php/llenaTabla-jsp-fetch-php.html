@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<style></style>
+</head>
+<body>
+	<div id="div_trabajo">
+		<h3>Llena tabla desde php usando fetch y js puro</h3>
+		<table id="mitabla">
+			<thead></thead>
+			<tbody></tbody>
+		</table>
+		<input type="button" id="btn_inserta" value="inserta">
+		<input type="button" id="btn_inserta_php" value="trae datos desde php">
+		<p id="mip"></p>
+	</div>
+	<script>
+		//http://localhost/ejercicios/etc/php/llenaTabla-jsp-fetch-php.html
+		window.onload=function(){
+			document.getElementById("btn_inserta").addEventListener('click',function(){
+				let fila="<tr><td>07</td><td>petri</td></tr>";
+				let ren=document.createElement("TR");
+				ren.innerHTML=fila;
+				document.getElementById("mitabla").appendChild(ren);
+			});
+
+            document.getElementById("btn_inserta_php").addEventListener('click',function(){
+                var request = new Request('devuleve_json_local.php');
+                fetch(request).then(function(respuesta) {
+                    console.log('la respuesta fue:'+respuesta.ok);
+                    return respuesta.json();
+                }).then(function(personas){
+                    let s="<tr><th>pk</th><th>nombre</th>";
+					let h=document.getElementById("mitabla").querySelector("thead");
+					h.innerHTML=s;
+					s="";
+					console.log("prueba fetch-> tamaño vector "+personas.length);
+					for(let {"pk":k,"nombre":n} of personas){
+						s+="<tr>";
+						s+="<td>"+k+"</td>";
+						s+="<td>"+n+"</td>";
+						s+="</tr>";
+					}
+					document.getElementById("mitabla").querySelector("tbody").innerHTML=s;
+                }).catch(function(err) {
+                    console.log(err);
+                });
+            });
+		};
+	</script>
+</body>
+</html>

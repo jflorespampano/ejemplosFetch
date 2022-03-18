@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<style></style>
+</head>
+<body>
+	<div id="div_trabajo">
+        <h2>Envia datos usando XMLHttpRequest con método POST</h2>
+
+		<input type="button" id="btn_enviar" value="inserta">
+		<p id="mip"></p>
+	</div>
+	<script>
+	//http://localhost/ejercicios/etc/php/enviar-post-ajax-a-php.html
+    //{google:ok,opera:ok,firefox:ok,ie:false}
+		window.onload=function(){
+			document.getElementById("btn_enviar").onclick = function(){
+                let ajax_url = "recibePOST.php";
+                let ajax_request = new XMLHttpRequest();
+                let datos="movimiento=update&id=4&nombre=juan&apellido=perez&edad=23&ciudad=Carmen&trabajo=plomero";
+                ajax_request.onreadystatechange = function() {
+                if (ajax_request.readyState == 4 ) {
+                    let respuesta=ajax_request.responseText;
+                    console.log("reciobio de regreso  : "+respuesta);
+                    document.write("reciobio de regreso : "+respuesta);
+                }
+            }
+            ajax_request.open( "POST", ajax_url, true );
+            ajax_request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            ajax_request.send(datos);
+            }
+		};
+	</script>
+</body>
+</html>

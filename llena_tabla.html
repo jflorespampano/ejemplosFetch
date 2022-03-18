@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+    <meta charset="utf-8">
+    <title>Alta Disco</title>
+    <!-- CSS -->
+</head>
+<body>
+
+    <!-- Content! -->
+    <table id="tbl_discos" border="1">
+		<thead>
+			<tr>
+				<th>id</th>
+				<th>titulo</th>
+				<th>interprete</th>
+				<th>año</th>
+			</tr>
+		</thead>
+		<tbody id="datos_tabla_discos">
+			
+		</tbody>
+		
+		
+	</table>
+
+    <!-- JS -->
+	<script>
+        var personas={};
+        //fetch('traePersonas-mysqli.php')
+        fetch('traeDiscosPDO.php')
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) {
+            console.log('data = ', data);
+            personas=data.salida;
+            console.log(personas.filter(x=>{
+                if(x.jahr>2000) return true;
+                else return false;
+            }));
+            var content="";
+            personas.forEach(function(element) {
+                    content+="<tr>";
+					
+                    content+="<td>"+element["id"]+"</td><td>"+element.interpret+"</td>";
+                    content+="<td>"+element["titel"]+"</td><td>"+element.jahr+"</td>";
+                   
+                    content+="</tr>";
+            });
+            document.getElementById("datos_tabla_discos").innerHTML=content;
+        })
+        .catch(function(err) {
+            console.error(err);
+        });
+    </script>
+</body>
+</html>

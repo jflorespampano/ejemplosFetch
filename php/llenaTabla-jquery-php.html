@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<style></style>
+</head>
+<body>
+	<div id="div_trabajo">
+		<h3>Llena tabla desde php usando jquery y POST</h3>
+		<table id="mitabla">
+			<thead></thead>
+			<tbody></tbody>
+		</table>
+		<input type="button" id="btn_inserta" value="inserta">
+		<input type="button" id="btn_inserta_php" value="llena tabla desde php">
+		<p id="mip"></p>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script>
+		//http://localhost/ejercicios/etc/php/llenaTabla-jquery-php.html
+		window.onload=function(){
+			document.getElementById("btn_inserta").addEventListener('click',function(){
+				let fila="<tr><td>07</td><td>petri</td></tr>";
+				let ren=document.createElement("TR");
+				ren.innerHTML=fila;
+				document.getElementById("mitabla").appendChild(ren);
+			})
+			document.getElementById("btn_inserta_php").addEventListener('click',function(){
+                $.ajax({
+					type: "POST",
+					url: "devuleve_json_local.php",
+					dataType: "json"
+				}).done(function(data){
+                    console.log(data);
+                    let personas=data;
+                    let s="<tr><th>pk</th><th>nombre</th>";
+					let h=document.getElementById("mitabla").querySelector("thead");
+					h.innerHTML=s;
+					s="";
+					console.log("tamaño vector "+personas.length);
+					for(let {"pk":k,"nombre":n} of personas){
+						s+="<tr>";
+						s+="<td>"+k+"</td>";
+						s+="<td>"+n+"</td>";
+						s+="</tr>";
+					}
+					document.getElementById("mitabla").querySelector("tbody").innerHTML=s;
+                }).fail(function(jqXHR, textStatus){//data
+                    //console.log(jqXHR.readyState);
+                    //console.log(jqXHR.responseText);
+                    //console.log(textStatus);
+                });
+			});
+		};
+	</script>
+</body>
+</html>

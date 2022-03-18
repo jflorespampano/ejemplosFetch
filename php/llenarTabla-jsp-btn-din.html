@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+	<style>
+		table{
+			width:50%;
+		}
+		td{
+			text-align:center;
+		}
+		tr:hover{
+			background-color:#edd;
+		}
+		tr:nth-child(even){background-color:#f2f2f2;}
+
+	</style>
+	<body>
+		<input type="button" id="btn_cargar_datos" value="carga datos">
+		
+		<table id="tabla">
+			<thead>
+                <tr><td>id</td><td>nombre</td><td>edad</td></tr>
+            </thead>
+			<tbody id="datosTabla">
+			</tbody>
+		</table>
+		<script>
+			
+			function llenar_tabla1(){
+				fetch('devuelve_personas_simple.php')
+				.then(function(response) {
+					return response.json();
+				})
+				.then(function(data) {
+					personas=data;
+					let content="";
+					personas.forEach(element => {
+						content+="<tr>";
+						content+="<td>"+element.id+"</td>";
+						content+="<td>"+element.nombre+"</td>";
+						content+="<td>"+element.edad+"</td>";
+						content+="</tr>";
+					});
+					document.getElementById("datosTabla").innerHTML=content;
+					//console.log(data);
+				});
+			}
+			
+			window.onload = function(){
+				document.getElementById('btn_cargar_datos').addEventListener('click',llenar_tabla1,false);
+			}
+		</script>
+	</body>
+</html>

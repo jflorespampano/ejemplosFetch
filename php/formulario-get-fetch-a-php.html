@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<style></style>
+</head>
+<body>
+	<form id="frm_trabajo" >
+        <h2>Enviar datos a php con fetch y metodo get</h2>
+        <label for="txt_movimiento">Movimiento</label>
+        <input type="text" id="txt_movimiento" value="insertar"><br>
+        <label for="txt_id">id</label>
+        <input type="text" id="txt_id" value="01"><br>
+        <label for="txt_nombre">nombre</label>
+        <input type="text" id="txt_nombre" value="alma maria"><br>
+        <label for="txt_apellido">apellido</label>
+        <input type="text" id="txt_apellido" value="rico"><br>
+        <input type="submit" id="btn_enviar" value="inserta">
+		<p id="mip"></p>
+    </form>
+	<script>
+		//http://localhost/ejercicios/etc/php/formulario-get-fetch-a-php.html
+		window.onload=function(){
+			document.getElementById("btn_enviar").onclick = function(event){
+                event.preventDefault();
+                let movimiento=document.getElementById("txt_movimiento").value+"01";
+                let id=document.getElementById("txt_id").value;
+                let nombre=document.getElementById("txt_nombre").value+"01";
+                let apellido=document.getElementById("txt_apellido").value;
+                let parametros="?movimiento="+movimiento+"&id="+id+"&nombre="+nombre+"&apellido="+apellido;
+                //var request = new Request('recibeGET.php?movimiento=1&id=1&nombre=luisa&apellido=rosales&edad=4', 
+                let request = new Request('recibeGET.php'+parametros, 
+                {
+                    method: 'get',
+                    headers: {'Content-Type':'application/x-www-form-urlencoded'}
+                });
+                fetch(request).then(function(returnedValue) {
+                    if(returnedValue.ok){
+                        console.log("operacion correcta");
+                        returnedValue.text().then((txt)=>{
+                            console.log('muestro respuesta: ', txt);
+                            document.write('recibo de regreso: ',txt);
+                        });
+                    }
+                }).catch(function(err) {
+                    console.log(err);
+                });
+            }
+		};
+	</script>
+</body>
+</html>

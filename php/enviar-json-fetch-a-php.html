@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<style></style>
+</head>
+<body>
+	<div id="div_trabajo">
+        <h2>Enviar datos a php con fetch datos como json desde un formulario</h2>
+        <form id="frm_editar">
+            <label for="p_id">id</label>
+            <input type="text" id="p_id" name="id">
+            <label for="p_nombre">nombre</label>
+            <input type="text" id="p_nombre" name="nombre">
+            <label for="p_apellido">apellido</label>
+            <input type="text" id="p_apellido" name="apellido">
+            <label for="p_edad">edad</label>
+            <input type="number" id="p_edad" name="edad">
+        </form>
+		<input type="button" id="btn_enviarjson" value="inserta">
+		<p id="mip"></p>
+	</div>
+	<script>
+		//http://localhost/ejercicios/etc/php/enviar-json-fetch-a-php.html
+		window.onload=function(){
+			document.getElementById("btn_enviarjson").onclick = function(){
+                var request = new Request('recibeJson.php', {
+                    method: 'post',
+                    //headers: new Headers({'Content-Type': 'application/json'}),
+                    body: JSON.stringify({
+                        id:document.getElementById("p_id").value,
+                        nombre:document.getElementById("p_nombre").value,
+                        apellido:document.getElementById("p_apellido").value,
+                        edad:document.getElementById("p_edad").value,
+                    })
+                });
+                fetch(request).then(function(returnedValue) {
+                    if(returnedValue.ok){
+                        console.log("operacion correcta");
+                        returnedValue.text().then((txt)=>{
+                            console.log('muestro respuesta: ', txt);
+                            document.write('recibo de regreso: ',txt);
+                        });
+                    }
+                }).catch(function(err) {
+                    console.log(err);
+                });
+            }
+		};
+	</script>
+</body>
+</html>

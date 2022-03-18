@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+    <meta charset="utf-8">
+    <title>Alta Disco</title>
+    <!-- CSS -->
+</head>
+<body>
+    <!-- Content! -->
+    <table id="tbl_discos" border="1">
+		<thead>
+			<tr>
+				<th>id</th>
+				<th>titulo</th>
+				<th>interprete</th>
+				<th>año</th>
+			</tr>
+		</thead>
+		<tbody id="datos_tabla_discos"></tbody>
+	</table>
+	<div id="insertar_datos">
+		<form id="frm_alta_disco">
+			<!--input type="number" name="id" placeholder="id" value="1"></input-->
+			<input type="text" name="title" placeholder="titulo" value="titulo"></input>
+			<input type="text" name="interpret" placeholder="interprete" value="interprete"></input>
+			<input type="text" name="jahr" placeholder="año" value="anio"></input>
+			<input type="button" id="btn_alta_disco" value="agregar"></input>
+		</form>
+	</div>
+    <!-- JS -->
+	<script>
+        var personas={};
+        //fetch('traePersonas-mysqli.php')
+        fetch('traeDiscosPDO.php')
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) {
+            console.log('data = ', data);
+            personas=data.salida;
+            console.log(personas.filter(x=>{
+                if(x.jahr>2000) return true;
+                else return false;
+            }));
+            var content="";
+            personas.forEach(function(element) {
+                    content+="<tr>";
+                    content+="<td>"+element["id"]+"</td><td>"+element.interpret+"</td>";
+                    content+="<td>"+element["titel"]+"</td><td>"+element.jahr+"</td>";
+                    content+="</tr>";
+            });
+            document.getElementById("datos_tabla_discos").innerHTML=content;
+        })
+        .catch(function(err) {
+            console.error(err);
+        });
+		document.getElementById("btn_alta_disco").onclick = function(){
+			fetch('alta_disco.php', {
+					method: 'post',
+					body: new FormData(document.getElementById('frm_alta_disco'))
+				}).then(function(returnedValue) {
+                    if(returnedValue.ok){
+                        console.log("operacion correcta");
+                        returnedValue.text().then((txt)=>{
+                            console.log('muestro respuesta: ', txt);
+                            document.write('recibo de regreso: ',txt);
+                        });
+                    }
+                }).catch(function(err) {
+                    console.log(err);
+                });
+		}
+    </script>
+</body>
+</html>

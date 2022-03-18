@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<style></style>
+</head>
+<body>
+	<div id="div_trabajo">
+		<h3>Llena tabla desde php usando ajax y js puro</h3>
+		<table id="mitabla">
+			<thead></thead>
+			<tbody></tbody>
+		</table>
+		<input type="button" id="btn_inserta" value="inserta">
+		<input type="button" id="btn_inserta_php" value="llena tabla desde php">
+		<p id="mip"></p>
+	</div>
+	<script>
+		//http://localhost/ejercicios/etc/php/llenaTabla-jsp-ajax-php.html
+		window.onload=function(){
+			document.getElementById("btn_inserta").addEventListener('click',function(){
+				let fila="<tr><td>07</td><td>petri</td></tr>";
+				let ren=document.createElement("TR");
+				ren.innerHTML=fila;
+				document.getElementById("mitabla").appendChild(ren);
+			})
+			document.getElementById("btn_inserta_php").addEventListener('click',function(){
+				var xmlhttp=new XMLHttpRequest();
+				xmlhttp.onreadystatechange=function(){
+					if(this.readyState ==4 && this.status== 200){
+						let personas=JSON.parse(this.responseText);
+						console.log(personas);
+						//document.getElementById("mip").innerHTML=this.responseText;
+						let s="<tr><th>pk</th><th>nombre</th>";
+						let h=document.getElementById("mitabla").querySelector("thead");
+						h.innerHTML=s;
+						s="";
+						console.log("tamaño vector "+personas.length);
+						for(let {"pk":k,"nombre":n} of personas){
+							s+="<tr>";
+							s+="<td>"+k+"</td>";
+							s+="<td>"+n+"</td>";
+							s+="</tr>";
+						}
+						document.getElementById("mitabla").querySelector("tbody").innerHTML=s;
+					}
+				};
+				xmlhttp.open("GET","devuleve_json_local.php",true);
+				xmlhttp.send();
+			});
+			//
+			
+		};
+	</script>
+</body>
+</html>

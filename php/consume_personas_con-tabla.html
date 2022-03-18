@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+    <body>
+        <table>
+            <thead>
+                <tr><td>id</td><td>nombre</td><td>edad</td></tr>
+            </thead>
+            <tbody id="datosTabla"></tbody>
+        </table>
+    </body>
+    <script>
+    fetch('devuelve_personas_simple.php')
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(data) {
+        personas=data;
+        let content="";
+        personas.forEach(element => {
+            content+="<tr>";
+            content+="<td>"+element.id+"</td>";
+            content+="<td>"+element.nombre+"</td>";
+            content+="<td>"+element.edad+"</td>";
+            content+="</tr>";
+        });
+        document.getElementById("datosTabla").innerHTML=content;
+        //console.log(data);
+    });
+    </script>
+</html>

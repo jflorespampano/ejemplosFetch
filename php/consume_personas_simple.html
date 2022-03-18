@@ -1,0 +1,10 @@
+<script>
+fetch('devuelve_personas_simple.php')
+ .then(function(response) {
+        return response.text();
+})
+ .then(function(data) {
+        document.write(data);
+        console.log(data);
+});
+</script>

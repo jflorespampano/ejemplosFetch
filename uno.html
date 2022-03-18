@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es-Es">
+<head>
+    <title>Page Title</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    
+    <!-- CSS -->
+</head>
+<body lang="en-US">
+
+    <!-- Content! -->
+    
+
+    <!-- JS -->
+	<script>
+		window.onload=function(){
+			function miPromesa() {
+				return new Promise((resolve,reject)=>{
+					setTimeout(console.log("hola"), 3000);
+					resolve();
+				});
+			  
+			}
+			function muestra(){
+				miPromesa().then(
+					function(){
+						console.log("promesa exitosa");
+					},
+					function(){
+						console.log("fracaso la promesa");
+					}
+				);
+			}
+			muestra();
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<style></style>
+</head>
+<body>
+	<div id="div_trabajo">
+		<h2>Enviar datos desde formulario a php con fetch y metodo post</h2>
+            <form id="frm_editar">
+                <label for="p_id">id</label>
+                <input type="text" id="p_id" name="id">
+                <label for="p_nombre">nombre</label>
+                <input type="text" id="p_nombre" name="nombre">
+                <label for="p_apellido">apellido</label>
+                <input type="text" id="p_apellido" name="apellido">
+                <label for="p_edad">edad</label>
+                <input type="number" id="p_edad" name="edad">
+            </form>
+		<input type="button" id="btn_inserta" value="inserta">
+		
+		<p id="mip"></p>
+	</div>
+	<script>
+		
+		window.onload=function(){
+			//http://localhost/ejercicios/etc/php/inserta-frm-jsp-fetch-php.html
+            document.getElementById("btn_inserta").addEventListener('click',function(){
+				var request = new Request('actualizaPersona.php', {
+					method: 'post',
+					body: new FormData(document.getElementById('frm_editar'))
+				});
+				fetch(request).then(function(returnedValue) {
+					if(returnedValue.ok){
+						console.log("operacion correcta");
+						returnedValue.text().then((txt)=>{
+							console.log('muestro respuesta: ', txt);
+							document.write('muestro respuesta: ', txt);
+						});
+					}
+				}).catch(function(err) {
+					console.log(err);
+				});
+            });
+		};
+	</script>
+</body>
+</html>

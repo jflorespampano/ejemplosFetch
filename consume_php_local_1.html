@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html lang="es-Es">
+<head>
+    <title>Alta Disco</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    
+    <!-- CSS -->
+</head>
+<body>
+
+    <!-- Content! -->
+    <table id="tbl_discos" border="1">
+		<thead>
+			<tr>
+				<th>id</th>
+				<th>titulo</th>
+				<th>interprete</th>
+				<th>año</th>
+			</tr>
+		</thead>
+		<tbody id="datos_tabla_discos">
+			
+		</tbody>
+		
+		
+	</table>
+	<div id="insertar_datos">
+		<form id="frm_alta_disco">
+			<input type="text" placeholder="id"></input>
+			<input type="text" placeholder="titulo"></input>
+			<input type="text" placeholder="interprete"></input>
+			<input type="text" placeholder="año"></input>
+			<input type="button" value="agregar"></input>
+		</form>
+	</div>
+
+    <!-- JS -->
+	<script>
+        var personas={};
+        //
+        //fetch('php_local_1.php')
+        fetch('php_MySql_1.php')
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) {
+            console.log('data = ', data);
+            var content="";
+            data.forEach(function(element) {
+                    content+="<tr>";
+					//nota: como se ve a continuación, se accede al json con: element["id"] o con:element.id
+                    content+="<td>"+element["id"]+"</td><td>"+element.interprete+"</td>";
+                    content+="<td>"+element["titulo"]+"</td><td>"+element.anio+"</td>";
+                    content+="</tr>";
+            });
+            document.getElementById("datos_tabla_discos").innerHTML=content;
+        })
+        .catch(function(err) {
+			console.log("Error...");
+            console.error(err);
+        });
+    </script>
+</body>
+</html>
