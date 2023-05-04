@@ -5,19 +5,30 @@
     
     <title>Document</title>
     <style>
+		table{
+			border-collapse: collapse;
+			border: 1px solid #000;
+		}
         tr.marcada{
-            background-color: blue;
+            background-color: Lavender;
+        }
+		tr.titulo{
+            background-color: DarkSlateBlue;
             color:white;
         }
+		tbody {
+		   border-top: 0;
+		   border-bottom:0;		   
+		}
     </style>
 </head>
 <body>
     <table border="1">
         <thead>
-            <tr>
+            <tr class="titulo">
                 <td>userId</td>
                 <td>Id</td>
-                <td>titulo</td>
+                <td><center>titulo</center></td>
             </tr>
         </thead>
         <tbody id="t_datos">
@@ -36,8 +47,8 @@
         return datos.json();
     }).then(datosj=>{
         let renglones="";
-        datosj.forEach(element => {
-            if(element.userId==2){
+        datosj.forEach((element,index) => {
+            if(index%2==0){
                 renglones+="<tr class='marcada'>";
             }else{
                 renglones+="<tr>";

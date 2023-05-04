@@ -1,14 +1,16 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
-	<style></style>
+    <style></style>
 </head>
+
 <body>
-	<div id="div_trabajo">
+    <div id="div_trabajo">
         <h2>Enviar datos a php con fetch con: get/post/json/enviando formulario/</h2>
-		<form id="frm_editar">
-			<label for="p_movimiento">movimiento</label>
+        <form id="frm_editar">
+            <label for="p_movimiento">movimiento</label>
             <input type="text" id="mov" name="movimiento" value="1">
             <label for="p_id">id</label>
             <input type="text" id="p_id" name="id" value="02">
@@ -18,102 +20,103 @@
             <input type="text" id="p_apellido" name="apellido" value="melcacho">
             <label for="p_edad">edad</label>
             <input type="number" id="p_edad" name="edad" value="34">
-			<input type="button" id="btn_inserta" value="envia desde formulario">
+            <input type="button" id="btn_inserta" value="envia desde formulario">
         </form>
-		
+
         <input type="button" id="btn_enviarPost" value="Envia_datos_con_Post">
         <input type="button" id="btn_enviarJson" value="Envia_datos_con_Json">
         <input type="button" id="btn_enviarGET" value="Envia_datos_con_GET">
-		<p id="mip"></p>
-	</div>
-	<script>
-	//enviar datos con post
-    //{google:ok,opera:ok,firefox:ok,ie:false}
-		window.onload=function(){
-			document.getElementById("btn_enviarPost").onclick = function(){
+        <p id="mip"></p>
+    </div>
+    <script>
+        //enviar datos con post
+        //{google:ok,opera:ok,firefox:ok,ie:false}
+        window.onload = function () {
+            document.getElementById("btn_enviarPost").onclick = function () {
                 var request = new Request('verificaGet_Post_Json.php', {
                     method: 'post',
-                    headers: {'Content-Type':'application/x-www-form-urlencoded'},
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: 'movimiento=1&id=1&nombre=luisito&apellido=rosales&edad=45'
                 });
-                fetch(request).then(function(returnedValue) {
-                    if(returnedValue.ok){
+                fetch(request).then(function (returnedValue) {
+                    if (returnedValue.ok) {
                         console.log("operacion correcta");
-                        returnedValue.text().then((txt)=>{
+                        returnedValue.text().then((txt) => {
                             console.log('respuesta con post: ', txt);
                             document.write('respuesta con post: ', txt);
                         });
                     }
-                }).catch(function(err) {
+                }).catch(function (err) {
                     console.log(err);
                 });
-		    };
-			//enviar datos con get
-			document.getElementById("btn_enviarGET").onclick = function(){
-                let parametros='movimiento=1&id=1&nombre=luisito&apellido=rosales&edad=45';
+            };
+            //enviar datos con get
+            document.getElementById("btn_enviarGET").onclick = function () {
+                let parametros = 'movimiento=1&id=1&nombre=luisito&apellido=rosales&edad=45';
                 //var request = new Request('recibeGET.php?movimiento=1&id=1&nombre=luisa&apellido=rosales&edad=4', 
-                let request = new Request('verificaGet_Post_Json.php?'+parametros, 
-                {
-                    method: 'get',
-                    headers: {'Content-Type':'application/x-www-form-urlencoded'}
-                });
-                fetch(request).then(function(returnedValue) {
-                    if(returnedValue.ok){
+                let request = new Request('verificaGet_Post_Json.php?' + parametros,
+                    {
+                        method: 'get',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                    });
+                fetch(request).then(function (returnedValue) {
+                    if (returnedValue.ok) {
                         console.log("operacion correcta");
-                        returnedValue.text().then((txt)=>{
+                        returnedValue.text().then((txt) => {
                             console.log('muestro respuesta: ', txt);
-                            document.write('recibo de regreso: ',txt);
+                            document.write('recibo de regreso: ', txt);
                         });
                     }
-                }).catch(function(err) {
+                }).catch(function (err) {
                     console.log(err);
                 });
-		    };
-			enviar datos con pst y formato json
-            document.getElementById("btn_enviarJson").onclick = function(){
+            };
+            //enviar datos con pst y formato json
+            document.getElementById("btn_enviarJson").onclick = function () {
                 //var request = new Request('recibeJson.php', {
                 var request = new Request('verificaGet_Post_Json.php', {
                     method: 'post',
-                    headers: new Headers({'Content-Type': 'application/json'}),
+                    headers: new Headers({ 'Content-Type': 'application/json' }),
                     body: JSON.stringify({
-						movimiento:1,
-                        id:"02",
-                        nombre:"carolina",
-                        apellido:"perez",
-                        edad:34
+                        movimiento: 1,
+                        id: "02",
+                        nombre: "carolina",
+                        apellido: "perez",
+                        edad: 34
                     })
                 });
-                fetch(request).then(function(returnedValue) {
-                    if(returnedValue.ok){
+                fetch(request).then(function (returnedValue) {
+                    if (returnedValue.ok) {
                         console.log("operacion correcta");
-                        returnedValue.text().then((txt)=>{
+                        returnedValue.text().then((txt) => {
                             console.log('respuesta con json: ', txt);
-                            document.write('respuesta con json: ',txt);
+                            document.write('respuesta con json: ', txt);
                         });
                     }
-                }).catch(function(err) {
+                }).catch(function (err) {
                     console.log(err);
                 });
             }
-			//enviar datos desde un formulario
-			document.getElementById("btn_inserta").addEventListener('click',function(){
-				var request = new Request('verificaGet_Post_Json.php', {
-					method: 'post',
-					body: new FormData(document.getElementById('frm_editar'))
-				});
-				fetch(request).then(function(returnedValue) {
-					if(returnedValue.ok){
-						console.log("operacion correcta");
-						returnedValue.text().then((txt)=>{
-							console.log('muestro respuesta: ', txt);
-							document.write('muestro respuesta: ', txt);
-						});
-					}
-				}).catch(function(err) {
-					console.log(err);
-				});
+            //enviar datos desde un formulario
+            document.getElementById("btn_inserta").addEventListener('click', function () {
+                var request = new Request('verificaGet_Post_Json.php', {
+                    method: 'post',
+                    body: new FormData(document.getElementById('frm_editar'))
+                });
+                fetch(request).then(function (returnedValue) {
+                    if (returnedValue.ok) {
+                        console.log("operacion correcta");
+                        returnedValue.text().then((txt) => {
+                            console.log('muestro respuesta: ', txt);
+                            document.write('muestro respuesta: ', txt);
+                        });
+                    }
+                }).catch(function (err) {
+                    console.log(err);
+                });
             });
         }//fin de window.onload
-	</script>
+    </script>
 </body>
+
 </html>
