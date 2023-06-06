@@ -2,11 +2,11 @@
 
 > Estos ejemplos usan js puro probados con XAMP marzo 2022
 
-La API Fetch proporciona una interfaz JavaScript para acceder y manipular partes del canal HTTP, como peticiones y respuestas. También provee un método global: fetch(), que proporciona una forma fácil y lógica de obtener recursos de forma asíncrona por la red. El método fetch devuelve una promesa, para entender mejor todo esto expliquemos lo siguiente:
+La API Fetch proporciona una interfaz JavaScript para acceder y manipular partes del canal HTTP, como peticiones y respuestas. También provee un método global: **fetch()**, que proporciona una forma fácil y lógica de obtener recursos de forma asíncrona por la red. El método fetch devuelve una promesa, para entender mejor todo esto expliquemos lo siguiente:
 
 ## Funcion setTimeout
 
-Para nuestros ejemplos usaremos la función timeout con formato:
+Para los primeros ejemplos usaremos la función timeout con formato:
 
 `setTimeout(function, milliseconds)`
 
@@ -18,7 +18,7 @@ milisegundos especificado.
 <!DOCTYPE html>
 <html>
 <body>
-    <p>Click en el boton espere 3 segundos, entonces se muestra alert "Hello".</p>
+    <p>Con click en el boton espera 3 segundos, entonces se muestra alert "Hello".</p>
     <button onclick="myFunction()">click aqui</button>
     <script>
         function myFunction() {
@@ -42,7 +42,7 @@ Una función asíncrona es aquella que no se ejecuta en la secuencia normal como
 de sentencias en un lenguaje, por ejemplo: en un código síncrono cada sentencia en su
 programa se ejecuta una después de otra, en el orden que las puso en su programa, la
 sentencia en la posición 3 no se ejecuta hasta que haya terminado de ejecutarse la
-sentencia en la posición 2 por ejemplo. Para entender esto veamos un ejemplo usando el
+sentencia en la posición 2 por ejemplo. Veamos un ejemplo usando el
 método setTimeout.
 
 ```javascript
@@ -98,7 +98,7 @@ formato:
 new Promise( function(resolve, reject) { ... } );
 ```
 
-La promesa encapsula a la función asíncrona (`function(resolve, reject) { ... }`) donde resolve y reject son dos funciones que ejecutaremos en el momento adecuado, lo que hace la promesa es ejecutar las sentencias de la función (lo que hay dentro de las llaves) por ejemplo traer una lista de datos desde la red y cuando se termina es posible que hayamos tenido un éxito o fracaso en nuestra tarea, por ejemplo es posible que los datos los hayamos traído correctamente o que el servidor no haya contestado. Dependiendo de si hubo éxito o fracaso, ejecutaremos
+La promesa encapsula a la función asíncrona (`function(resolve, reject) { ... }`) donde resolve y reject son dos funciones que ejecutaremos en el momento adecuado, lo que hace la promesa es ejecutar las sentencias de la función (lo que hay dentro de las llaves `{...}`) por ejemplo solicitar una lista de datos desde la red y cuando se termina es posible que hayamos tenido un éxito o fracaso en nuestra tarea, por ejemplo es posible que los datos los hayamos traído correctamente o que el servidor haya contestado con un error. Dependiendo de si hubo éxito o fracaso, ejecutaremos
 el parámetro resolve o reject, recuerde que ambos son referencias a funciones callback.
 Algo más o menos así:
 ```javascript
@@ -140,12 +140,12 @@ promesa es cumplida, si la promesa es rechazada no hacemos nada.
 then().
 
 # Método then()
-El método then() de una promesa se puede usar para enviar las funciones resolve y reject a
+El método **then()** de una promesa se puede usar para enviar las funciones resolve y reject a
 la promesa, el método then también retorna una promesa (esto servirá para encadenar
-promesas). Then(), Recibe dos argumentos: funciones callback para los casos de éxito y
+promesas). **then()**, Recibe dos argumentos: funciones callback para los casos de éxito y
 fallo del Promise, aunque la función de fallo es opcional.
 
-formato, si p es una promesa, la sintaxis para el then es:
+Formato: si p es una promesa, la sintaxis para el then es:
 
 `p.then(resolve[, reject]);`
 
@@ -166,9 +166,8 @@ p.then(function() {
     });
 ```
 
-Esto es: p es una promesa que tiene como argumento 2 funciones (o una), cuando regresa
-de la ejecución de p, el método then ejecuta la función adecuada en caso de que la
-promesa p haya sido exitosa o no.
+Esto es: si **p** es una promesa, **then()** es otra promesa que tiene como argumento 2 funciones (o una), cuando regresa
+de la ejecución de la promesa **p**, el método **then** ejecuta la función adecuada en caso de que la promesa **p** haya sido exitosa o no.
 
 Ejemplo
 ```javascript
@@ -199,8 +198,9 @@ Ejemplo
 </html>
 ```
 En este ejemplo vemos como desde el **then** mandamos las funciones resolve y reject que
-usará la promesa (en nuestro ejemplo solo se uso la función resolve)
-ejemplo:
+usará la promesa (en nuestro ejemplo solo se uso la función resolve, simulando el exito de la promesa y ejecutando la función recibida en resolve)
+
+Ejemplo:
 Veamos un ejemplo más usando una función que nos devuelve una promesa, este es un
 caso típico que encontrará en JS.
 
@@ -246,9 +246,8 @@ function muestra(){
 }
 ```
 
-Ejecuta la función miPromesa() y con el método then que se llama desde una promesa con
-un punto seguido de then(). El método then() ejecuta la función adecuada dependiendo si la
-promesa fue exitosa o no.
+Ejecuta la función **miPromesa()** y con el método **then** que se llama desde una promesa con
+un punto seguido de **then()**. El método **then()** ejecuta la función adecuada dependiendo si la promesa fue exitosa o no.
 
 La función:
 ```javascript
@@ -277,7 +276,7 @@ Cambie el código de la línea de setTimeout por esta:
 y pruebe el código:
 
 Esta vez estamos simulando que la promesa fue rechazada, es decir que no tuvo éxito. Vea
-el resultado del código. Cómo ve ahora el then ejecuta la sentencia:
+el resultado del código. Cómo ve ahora ejecuta la sentencia:
 
 `console.log("fracaso la promesa");`
 
@@ -313,7 +312,8 @@ datos=>{
         return datos.text();
     }
 ```
-La cual recibe en el parámetro datos, la respuesta del servidor, y devuelve **datos.text()**, datos.text() devuelve una promesa que obtiene los datos enviados por el servidor en formato de texto, como esta es una promesa, le aplicamos un nuevo then con el código:
+La cual recibe en el parámetro datos, la respuesta del servidor, y devuelve **datos.text()**, datos.text() es una nueva promesa que devuelve los datos enviados por el servidor en formato de texto, como **datos.text()** esta es una promesa, le aplicamos un nuevo **then** con el código:
+
 ```javascript
 datosj=>{
         console.log(datosj);
@@ -362,6 +362,7 @@ Ejemplo 2:
 </html>
 ```
 
+Hasta ahora no hemos revisado que la respuesta del servidor haya sido correcta, estamos asumiendo que lo será, veamo ahora un ejemplo donde verificamos el estado de la respuesta del servidor, cuando mando una solictud a un servidor mediante HTTP, en la **data** que retorna el servidor viene una variabole **ok** que sera **true** si la respuesta del servidor fue correcta y **false** en caso de algún error. 
 Ejemplo 3:
 ```html
 <table id="tbl_partes" class="w3-table-all">
@@ -393,13 +394,14 @@ fetch("consulta_partes.php")
                 // ponMensaje("Datos cargados correctamente");
             });
         } else {
+            //muestro el mensaje de error
             data.text().then(data => console.log(data));
         }
     })
 
 ```
 
-La sentencia `if (data.ok)` verifica si la respuesta del servidor fue correcta y si es así, ejecula `data.json()` que toma los datos recibidos por el servidor y los convierte a formato JSON y como la sentencia `data.json` es una promesa, debe ser tratada como tal con su respectivo then.
+La sentencia `if (data.ok)` verifica si la respuesta del servidor fue correcta y si es así, ejecula `data.json()` que toma los datos recibidos por el servidor y los convierte a formato JSON y como la sentencia `data.json` es una promesa, debe ser tratada como tal con su respectivo **then**.
 
 # enviar formulario
 
@@ -440,8 +442,6 @@ boton.addEventListener("click", function () {
             console.log("operacion correcta");
             returnedValue.text().then((txt) => {
                 console.log('muestro respuesta: ', txt);
-                consultaPartes();
-                ponMensaje(txt);
             });
         }
     }).catch(function (err) {
@@ -449,7 +449,7 @@ boton.addEventListener("click", function () {
     });   
 })
 ```
-código php ejemplo 1
+código php 'inserta_parte.php' ejemplo 1
 ```php
 <?php
 
@@ -495,7 +495,7 @@ exit();
 ?>
 ```
 
-código PHP ejemplo 2
+código PHP 'inserta_parte.php' ejemplo 2
 ```php
 <?php
 /**
